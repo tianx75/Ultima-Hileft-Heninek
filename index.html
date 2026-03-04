@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ULTIMA HILEFT™ – Arcfiatalítás új generációja</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #161616;
+            --bg-card-hover: #1c1c1c;
+            --gold: #c9a96e;
+            --gold-light: #e4cfa0;
+            --gold-dark: #9a7b4f;
+            --text-primary: #f0ece4;
+            --text-secondary: #a09a90;
+            --text-muted: #6b665e;
+            --border: #2a2520;
+            --accent-glow: rgba(201, 169, 110, 0.08);
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* === UTILITY === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 7rem 0;
+            position: relative;
+        }
+
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 300;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        /* === NOISE OVERLAY === */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* === NAV === */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: all 0.5s ease;
+            background: transparent;
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-body);
+            font-weight: 200;
+            font-size: 1.4rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-cta {
+            padding: 0.65rem 1.8rem;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold) !important;
+            font-size: 0.75rem !important;
+            letter-spacing: 0.15em !important;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--bg-primary) !important;
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 70%;
+            height: 120%;
+            background: radial-gradient(ellipse at center, rgba(201, 169, 110, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-primary), transparent);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6.5vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero h1 .line-gold {
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.7s;
+        }
+
+        .hero-tags span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .hero-tags span::before {
+            content: '—';
+            position: absolute;
+            left: -0.5rem;
+            color: var(--gold-dark);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--gold);
+            color: var(--bg-primary);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 169, 110, 0.2);
+        }
+
+        .btn-primary:hover::after {
+            transform: translateX(4px);
+        }
+
+        .btn-secondary {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: color 0.3s;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.25rem;
+        }
+
+        .btn-secondary:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* === IMAGE PLACEHOLDER === */
+        .img-placeholder {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201,169,110,0.03) 0%, transparent 60%);
+        }
+
+        /* === SECTION: ABOUT === */
+        .about {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-visual {
+            aspect-ratio: 4/5;
+            border-radius: 2px;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .about-feature {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 1.25rem;
+            align-items: start;
+        }
+
+        .about-feature-num {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .about-feature h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-feature p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* === SECTION: HOW IT WORKS === */
+        .how-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .how-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem 2rem;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .how-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold-dark);
+            transform: translateY(-4px);
+        }
+
+        .how-card-num {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--gold);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .how-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .how-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* === SECTION: ADVANTAGES === */
+        .advantages {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .adv-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .adv-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .adv-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+
+        .adv-item:hover {
+            border-color: var(--gold-dark);
+        }
+
+        .adv-item-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .adv-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .adv-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* === SECTION: RESULTS === */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+            margin-top: 3rem;
+        }
+
+        .results-phase {
+            position: relative;
+        }
+
+        .results-phase-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gold-dark);
+        }
+
+        .results-phase h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .results-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .results-list li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .results-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .results-note {
+            margin-top: 3rem;
+            padding: 1.5rem 2rem;
+            border-left: 2px solid var(--gold-dark);
+            background: var(--accent-glow);
+        }
+
+        .results-note p {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        /* === SECTION: COMPARISON === */
+        .comparison {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 3rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .comparison-table thead th {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gold-dark);
+        }
+
+        .comparison-table tbody tr {
+            transition: background 0.3s;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(201, 169, 110, 0.03);
+        }
+
+        .comparison-table .highlight-row {
+            background: rgba(201, 169, 110, 0.05);
+        }
+
+        .comparison-table .highlight-row td {
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
+        .comparison-table td {
+            color: var(--text-secondary);
+        }
+
+        .comparison-table .check {
+            color: var(--gold);
+        }
+
+        .comparison-table .cross {
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* === SECTION: PROCESS === */
+        .process-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 29px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            align-items: start;
+            position: relative;
+        }
+
+        .process-step-dot {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--gold);
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .process-step:hover .process-step-dot {
+            border-color: var(--gold);
+            background: rgba(201, 169, 110, 0.08);
+        }
+
+        .process-step h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .process-step p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .process-duration {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .process-duration-time {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .process-duration p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* === SECTION: TARGET === */
+        .target-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .target-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .target-list li {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            padding: 1rem 1.5rem;
+            border-left: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .target-list li:hover {
+            border-color: var(--gold);
+            color: var(--text-primary);
+            background: var(--accent-glow);
+        }
+
+        .target-age {
+            margin-top: 2.5rem;
+            padding: 1.5rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: inline-block;
+        }
+
+        .target-age span {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--gold);
+            font-weight: 300;
+        }
+
+        .target-age p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 0.25rem;
+        }
+
+        .target-visual {
+            aspect-ratio: 3/4;
+            border-radius: 2px;
+        }
+
+        /* === SECTION: PRICING === */
+        .pricing {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pricing-card {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--gold-dark);
+            padding: 3.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .pricing-treatment {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-unit {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .pricing-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* === SECTION: CLINIC === */
+        .clinic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .clinic-visual {
+            aspect-ratio: 5/4;
+            border-radius: 2px;
+        }
+
+        .clinic-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .clinic-feature {
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .clinic-feature::before {
+            content: '✦';
+            color: var(--gold);
+            font-size: 0.7rem;
+            margin-top: 0.35rem;
+            flex-shrink: 0;
+        }
+
+        /* === CTA === */
+        .cta-section {
+            padding: 8rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section .section-title {
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .cta-section .section-subtitle {
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-logo {
+            font-family: var(--font-body);
+            font-weight: 200;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .footer-right {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        /* === DIVIDER === */
+        .section-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold-dark);
+            margin: 0 auto;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === MOBILE MENU === */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-toggle span {
+            width: 24px;
+            height: 1px;
+            background: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: flex; }
+
+            .about-grid,
+            .adv-header,
+            .results-grid,
+            .target-grid,
+            .clinic-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .how-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .adv-list {
+                grid-template-columns: 1fr;
+            }
+
+            .about-visual,
+            .target-visual,
+            .clinic-visual {
+                aspect-ratio: 16/9;
+                max-height: 300px;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.8rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.2rem, 8vw, 3.5rem);
+            }
+
+            .hero-tags {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .pricing-card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .process-duration {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer .container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="container">
+            <a href="#" class="nav-logo">ULTIMA <span>HILEFT™</span></a>
+            <ul class="nav-links">
+                <li><a href="#about">Technológia</a></li>
+                <li><a href="#how">Működés</a></li>
+                <li><a href="#results">Eredmények</a></li>
+                <li><a href="#pricing">Árak</a></li>
+                <li><a href="#cta" class="nav-cta">Időpontfoglalás</a></li>
+            </ul>
+            <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Új generációs arcfiatalítás</div>
+                <h1>
+                    A két hatóerejű<br>
+                    <span class="line-gold">arcfiatalítás</span><br>
+                    új generációja
+                </h1>
+                <p class="hero-desc">
+                    A kezelés, amely egyszerre emeli meg az arc kontúrjait, erősíti a mélyizmokat és sejtszinten újítja meg a bőrt.
+                </p>
+                <div class="hero-tags">
+                    <span>Természetes</span>
+                    <span>Látványos</span>
+                    <span>Fájdalommentes</span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#cta" class="btn-primary">Időpontfoglalás</a>
+                    <a href="#about" class="btn-secondary">Tudj meg többet</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / MI AZ A HILEFT -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-visual img-placeholder" style="min-height:500px;">
+                    [ kezelés fotó ]
+                </div>
+                <div class="fade-in">
+                    <div class="section-label">Mi az a HILEFT™?</div>
+                    <h2 class="section-title">A bőr és az izmok <em>együttes kezelése</em></h2>
+                    <p class="section-subtitle">
+                        Az arc öregedése nem csupán a bőr felszíni folyamatain múlik. A tónusukat vesztett izmok lefelé húzzák a bőrt, míg a kollagén- és elasztinszint csökkenése tovább mélyíti a ráncokat.
+                    </p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-num">01</div>
+                            <div>
+                                <h4>Fotobiomoduláció</h4>
+                                <p>730 nm + 940 nm fényterápia — aktiválja a mitokondriumokat, fokozza a kollagén és elasztin termelését, javítja a keringést és visszaadja a bőr rugalmasságát.</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-num">02</div>
+                            <div>
+                                <h4>Myofunkcionális izomstimuláció</h4>
+                                <p>Újraformálja az arc kontúrjait, visszaadja az izmok tónusát és tartását — természetes liftinghatást eredményez, invazív beavatkozás nélkül.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+        <div class="container">
+            <div class="fade-in" style="text-align:center; max-width:650px; margin:0 auto;">
+                <div class="section-label" style="justify-content:center;">Hogyan működik?</div>
+                <h2 class="section-title">Három szinten fejti ki <em>hatását</em></h2>
+            </div>
+            <div class="how-grid">
+                <div class="how-card fade-in">
+                    <div class="how-card-num">01</div>
+                    <h3>Sejtszintű regeneráció</h3>
+                    <p>A fényenergia aktiválja a sejtek ATP-termelését, ami gyorsítja a regenerációs folyamatokat és látványosan javítja a bőr minőségét. Belülről induló bőrmegújulás.</p>
+                </div>
+                <div class="how-card fade-in">
+                    <div class="how-card-num">02</div>
+                    <h3>Mélyizom-aktiváció</h3>
+                    <p>Az arc több mint 40 izma közvetlenül tapad a bőrhöz. Ha az izmok erősödnek, az arc automatikusan feszesebbé, emeltebbé válik — feszesebb kontúrok azonnal.</p>
+                </div>
+                <div class="how-card fade-in">
+                    <div class="how-card-num">03</div>
+                    <h3>Szinergikus lifting</h3>
+                    <p>A fényterápia „belülről épít", az izomstimuláció „alulról emel". Az eredmény: friss, tónusos, harmonikus arcél — természetes, mégis látványos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADVANTAGES -->
+    <section class="section advantages" id="advantages">
+        <div class="container">
+            <div class="adv-header fade-in">
+                <div>
+                    <div class="section-label">Miben különleges?</div>
+                    <h2 class="section-title">Amit egyetlen más <em>kezelés sem nyújt</em></h2>
+                </div>
+                <p class="section-subtitle" style="align-self:end;">
+                    Más kezelések vagy a bőrt, vagy az izmokat célozzák. A HILEFT™ az egyetlen, amely mindkettőt, tökéletes szinergiában.
+                </p>
+            </div>
+            <div class="adv-list">
+                <div class="adv-item fade-in">
+                    <div class="adv-item-icon">✦</div>
+                    <h4>Non-invazív és fájdalommentes</h4>
+                    <p>Nincs szúrás, nincs helyi érzéstelenítés, nincs felépülési idő. Azonnal visszatérhetsz a napodhoz.</p>
+                </div>
+                <div class="adv-item fade-in">
+                    <div class="adv-item-icon">◈</div>
+                    <h4>Azonnali látványos hatás</h4>
+                    <p>A szemöldök liftingje, a pofavonal tónusosodása és az arc kontúrjának élesedése már az első alkalom után észrevehető.</p>
+                </div>
+                <div class="adv-item fade-in">
+                    <div class="adv-item-icon">❋</div>
+                    <h4>Hosszú távú feszesítés</h4>
+                    <p>A kollagénszintézis hetekig aktív marad: a bőr minden nappal szebb, feszesebb és egyenletesebb lesz. Kúraszerűen használva tartós hatás.</p>
+                </div>
+                <div class="adv-item fade-in">
+                    <div class="adv-item-icon">◇</div>
+                    <h4>Ideális Botox és töltés mellé</h4>
+                    <p>Meghosszabbítja a Botox hatását, miközben megelőzi az izomatrófiát. Erősíti a töltések által megemelt struktúrát.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section" id="results">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Eredmények</div>
+                <h2 class="section-title">Amelyeket <em>várhatsz</em></h2>
+            </div>
+            <div class="results-grid">
+                <div class="results-phase fade-in">
+                    <div class="results-phase-label">Már az első kezelés után</div>
+                    <h3>Azonnal észrevehető változás</h3>
+                    <ul class="results-list">
+                        <li>Emeltebb szemöldök</li>
+                        <li>Élénkebb, frissebb arcbőr</li>
+                        <li>Feszesebb állvonal</li>
+                    </ul>
+                </div>
+                <div class="results-phase fade-in">
+                    <div class="results-phase-label">3–6 alkalmas kúra után</div>
+                    <h3>Tartós megújulás</h3>
+                    <ul class="results-list">
+                        <li>Kisimult ráncok</li>
+                        <li>Újrafeszesedő szövetek</li>
+                        <li>Definiált arckontúr</li>
+                        <li>Javuló bőrtextúra és bőrsűrűség</li>
+                        <li>Fiatalosabb, harmonikus arcforma</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="results-note fade-in">
+                <p>Az eredmények teljesen természetesek — soha nem túlzóak, nem „túlkezeltek".</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="section comparison">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Összehasonlítás</div>
+                <h2 class="section-title">A piacon elérhető <em>technológiákkal</em></h2>
+            </div>
+            <table class="comparison-table fade-in">
+                <thead>
+                    <tr>
+                        <th>Technológia</th>
+                        <th>Invazivitás</th>
+                        <th>Fájdalom</th>
+                        <th>Felépülési idő</th>
+                        <th>Célterület</th>
+                        <th>Hatás</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td><strong>HILEFT™</strong></td>
+                        <td>Non-invazív</td>
+                        <td class="check">0</td>
+                        <td class="check">0</td>
+                        <td>Bőr + izmok</td>
+                        <td>Lifting + regeneráció</td>
+                    </tr>
+                    <tr>
+                        <td>RF</td>
+                        <td>Minimálisan invazív</td>
+                        <td>Enyhe</td>
+                        <td>Alacsony</td>
+                        <td>Bőr</td>
+                        <td>Kollagénfokozás</td>
+                    </tr>
+                    <tr>
+                        <td>HIFU</td>
+                        <td>Közepesen invazív</td>
+                        <td class="cross">Fájdalmas</td>
+                        <td class="cross">2–7 nap</td>
+                        <td>Mély rétegek</td>
+                        <td>Szövetzsugorítás</td>
+                    </tr>
+                    <tr>
+                        <td>Mikroneedling</td>
+                        <td>Invazív</td>
+                        <td class="cross">Érzéstelenítést igényel</td>
+                        <td class="cross">2–3 nap</td>
+                        <td>Bőr</td>
+                        <td>Mikrosérülés-alapú megújulás</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- TARGET AUDIENCE -->
+    <section class="section" id="target">
+        <div class="container">
+            <div class="target-grid">
+                <div class="fade-in">
+                    <div class="section-label">Kinek ajánljuk?</div>
+                    <h2 class="section-title">Ideális választás, <em>ha…</em></h2>
+                    <ul class="target-list">
+                        <li>Megereszkedett a pofavonal vagy az arc közepe</li>
+                        <li>Kezd eltűnni az arc definíciója</li>
+                        <li>Fakóbb lett a bőrtónus</li>
+                        <li>Finom vagy mélyebb ráncok jelentek meg</li>
+                        <li>Természetes, injekció nélküli liftinget szeretnél</li>
+                        <li>Kiegészítenéd a Botox vagy filler eredményeit</li>
+                    </ul>
+                    <div class="target-age">
+                        <span>30 – 70 év</span>
+                        <p>Ajánlott életkor</p>
+                    </div>
+                </div>
+                <div class="target-visual img-placeholder" style="min-height:500px;">
+                    [ páciens fotó ]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process" style="background:var(--bg-secondary); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Hogyan zajlik a kezelés?</div>
+                <h2 class="section-title">Lépésről <em>lépésre</em></h2>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step fade-in">
+                    <div class="process-step-dot">01</div>
+                    <div>
+                        <h4>Konzultáció és állapotfelmérés</h4>
+                        <p>Személyre szabott kezelési terv kialakítása az aktuális bőrállapot alapján.</p>
+                    </div>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="process-step-dot">02</div>
+                    <div>
+                        <h4>Bőr előkészítése</h4>
+                        <p>A kezelési terület tisztítása és felkészítése az optimális hatáshoz.</p>
+                    </div>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="process-step-dot">03</div>
+                    <div>
+                        <h4>Izomstimuláció + fényterápia</h4>
+                        <p>A két hatás együttes alkalmazása szinergikusan erősíti egymást.</p>
+                    </div>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="process-step-dot">04</div>
+                    <div>
+                        <h4>Személyre szabott intenzitás</h4>
+                        <p>Az intenzitás beállítása az egyéni igényeknek és érzékenységnek megfelelően.</p>
+                    </div>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="process-step-dot">05</div>
+                    <div>
+                        <h4>Befejező nyugtató protokoll</h4>
+                        <p>A kezelés lezárása a bőr megnyugtatásával.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="process-duration fade-in">
+                <div class="process-duration-time">30–40 perc</div>
+                <p>Nincs pirosság, nincs érzékenység — azonnal visszatérhetsz a napodhoz.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="fade-in" style="text-align:center;">
+                <div class="section-label" style="justify-content:center;">Árlista</div>
+                <h2 class="section-title">Befektetés a <em>természetes szépségbe</em></h2>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="pricing-treatment">ULTIMA HILEFT™ teljes arc kezelés</div>
+                <div class="pricing-amount">112.000 Ft</div>
+                <div class="pricing-unit">alkalom / teljes arc</div>
+                <div class="pricing-note">Kúra esetén egyedi, kedvezményes csomagár.</div>
+                <a href="#cta" class="btn-primary">Foglalj időpontot</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLINIC -->
+    <section class="section" id="clinic">
+        <div class="container">
+            <div class="clinic-grid">
+                <div class="clinic-visual img-placeholder" style="min-height:400px;">
+                    [ klinika belső fotó ]
+                </div>
+                <div class="fade-in">
+                    <div class="section-label">Miért válassz minket?</div>
+                    <h2 class="section-title">The Ultimate Beauty</h2>
+                    <p class="section-subtitle">A budai boutique klinika prémium technológiával</p>
+                    <div class="clinic-features">
+                        <div class="clinic-feature">Exkluzív budai villa</div>
+                        <div class="clinic-feature">Diszkréció, személyre szabott figyelem</div>
+                        <div class="clinic-feature">Nemzetközi protokollok</div>
+                        <div class="clinic-feature">Több mint 8.000 páciens tapasztalata</div>
+                        <div class="clinic-feature">A HILEFT™ technológia budapesti referencia klinikája</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="cta">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label" style="justify-content:center;">Következő lépés</div>
+                <h2 class="section-title">Válaszd a természetes lifting <em>új generációját</em></h2>
+                <p class="section-subtitle">
+                    Fiatalosabb, frissebb, feszesebb arc — műtét és fájdalom nélkül.
+                </p>
+                <a href="#" class="btn-primary" style="display:inline-flex; margin-top:1rem;">Foglalj időpontot most</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-left">© 2025 The Ultimate Beauty. Minden jog fenntartva.</div>
+            <div class="footer-logo">ULTIMA</div>
+            <div class="footer-right">Budapest, Buda</div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Fade-in on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
